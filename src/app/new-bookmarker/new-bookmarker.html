@@ -1,0 +1,32 @@
+ <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+      
+      <!-- Name Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error *ngIf="form.get('name')?.hasError('required')">
+          Name is required
+        </mat-error>
+        <mat-error *ngIf="form.get('name')?.hasError('minlength')">
+          Name must be at least 3 characters
+        </mat-error>
+      </mat-form-field>
+
+      <!-- URL Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>URL</mat-label>
+        <input matInput formControlName="url" />
+        <mat-error *ngIf="form.get('url')?.hasError('required')">
+        </mat-error>
+        <mat-error *ngIf="form.get('url')?.hasError('pattern')">
+        </mat-error>
+      </mat-form-field>
+
+      <input type="hidden" formControlName="datetime">
+      <input type="hidden" formControlName="bookmarkerId">
+
+      <!-- Submit Button -->
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        Submit
+      </button>
+    </form>
