@@ -8,4 +8,7 @@
           <mat-icon>add</mat-icon>
           </a>
         </div>
+        <mat-form-field>
+          <input matInput [(ngModel)]="searchBookmarker" placeholder="Filter Bookmarker" autocomplete="off" (input)="onSearchBookmarker()">
+        </mat-form-field>
 </mat-toolbar>

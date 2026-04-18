@@ -6,9 +6,9 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Bookmarker } from '../models/bookmarker';
 import { selectBookmarkers } from '../states/selector/app.selector';
-import { AsyncPipe } from '@angular/common';
-import { Router, RouterOutlet, RouterLink } from '@angular/router';
-
+import { Router, RouterOutlet} from '@angular/router';
+import  Fuse from 'fuse.js';
+import { SearchBookmarker } from '../services/search-bookmarker' 
 export interface Section {
   name: string;
   updated: Date;
@@ -16,31 +16,37 @@ export interface Section {
 
 @Component({
   selector: 'app-bookmarker-list',
-  imports: [MatListModule, MatIconModule, MatDividerModule, AsyncPipe, RouterOutlet, RouterLink],
+  imports: [MatListModule, MatIconModule, MatDividerModule, RouterOutlet],
   templateUrl: './bookmarker-list.html',
   styleUrl: './bookmarker-list.scss',
 })
 export class BookmarkerList implements OnInit {
   private store = inject(Store);
   private route = inject(Router);
-  bookmarkers$: Observable<Bookmarker[]> = this.store.select(selectBookmarkers);
-
+  private bookmarkers$: Observable<Bookmarker[]> = this.store.select(selectBookmarkers);
+  private bookmarkersList?: any;
+  private searchService = inject(SearchBookmarker);
+  private today = new Date();
+  public filteredBookmarkersList?: any;
+  
   ngOnInit(): void {
-      console.log("bookmarkers$ ", this.bookmarkers$);    
+    this.bookmarkers$.subscribe((bookmarker)=> {
+      this.bookmarkersList = bookmarker;
+    });
+    let fuse = new Fuse(this.bookmarkersList, { keys: ['name', 'url'], threshold: 0.3 });
+    this.searchService.searchTerm$.subscribe(term => {
+      if (term) {
+        this.filteredBookmarkersList = fuse.search(term).map(result => result.item);
+      } 
+      else {
+        this.filteredBookmarkersList = [...this.bookmarkersList];
+      }
+    }); 
   }
 
   editBookmarker(id: Number) {
-    console.log("editBookmarker ", id);  
-    try {
-      this.route.navigate(['/new-bookmarker', id]);
-    } catch (e: any) {
-      console.log("Error: ",Error);
-    }
-
+    this.route.navigate(['/new-bookmarker', id]);
   }
-
-  ////////// date filter ////////////
-  today = new Date();
 
   private normalize(date: Date): string {
     return date.toDateString();
@@ -61,5 +67,5 @@ export class BookmarkerList implements OnInit {
     yesterday.setDate(this.today.getDate() - 1);
     return date < yesterday;
   }
-  ////////// date filter ////////////
+
 }
