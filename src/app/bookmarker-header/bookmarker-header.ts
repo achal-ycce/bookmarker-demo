@@ -24,7 +24,6 @@ export class BookmarkerHeader {
   }
 
   onSearchBookmarker() {
-    console.log("onSearchBookmarker....", this.searchBookmarker);
     this.searchService.setSearchTerm(this.searchBookmarker);
   }
 

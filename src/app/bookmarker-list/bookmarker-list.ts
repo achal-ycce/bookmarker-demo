@@ -9,6 +9,8 @@ import { selectBookmarkers } from '../states/selector/app.selector';
 import { Router, RouterOutlet} from '@angular/router';
 import  Fuse from 'fuse.js';
 import { SearchBookmarker } from '../services/search-bookmarker' 
+import { GetBookmarkerService } from '../services/get-bookmarker-service'
+import { loadItems } from '../states/action/app.action';
 export interface Section {
   name: string;
   updated: Date;
@@ -23,16 +25,14 @@ export interface Section {
 export class BookmarkerList implements OnInit {
   private store = inject(Store);
   private route = inject(Router);
-  private bookmarkers$: Observable<Bookmarker[]> = this.store.select(selectBookmarkers);
+  private bookmarkers$?: Observable<Bookmarker[]> ;
   private bookmarkersList?: any;
   private searchService = inject(SearchBookmarker);
+  private getBookmarkerService = inject(GetBookmarkerService);
   private today = new Date();
   public filteredBookmarkersList?: any;
   
-  ngOnInit(): void {
-    this.bookmarkers$.subscribe((bookmarker)=> {
-      this.bookmarkersList = bookmarker;
-    });
+  configureSearch() {
     let fuse = new Fuse(this.bookmarkersList, { keys: ['name', 'url'], threshold: 0.3 });
     this.searchService.searchTerm$.subscribe(term => {
       if (term) {
@@ -44,22 +44,41 @@ export class BookmarkerList implements OnInit {
     }); 
   }
 
+  ngOnInit(): void {
+    this.bookmarkers$ = this.store.select(selectBookmarkers);
+    this.bookmarkers$.subscribe((bookmarker)=> {
+      this.bookmarkersList = bookmarker;
+      if (this.bookmarkersList.length === 0) {
+        this.store.dispatch(loadItems());
+      }
+      this.configureSearch();
+    });
+  }
+
   editBookmarker(id: Number) {
     this.route.navigate(['/new-bookmarker', id]);
   }
 
-  private normalize(date: Date): string {
-    return date.toDateString();
+  private dateFormat(date: Date) {
+    return new Date(date);
   }
 
   isToday(date: Date): boolean {
-    return this.normalize(date) === this.normalize(this.today);
+    const formattedDate = this.dateFormat(date);
+    return (formattedDate.getDate() === this.dateFormat(this.today).getDate() &&
+            formattedDate.getMonth() === this.dateFormat(this.today).getMonth() &&
+            formattedDate.getFullYear() === this.dateFormat(this.today).getFullYear()
+          );
   }
 
   isYesterday(date: Date): boolean {
     const yesterday = new Date(this.today);
     yesterday.setDate(this.today.getDate() - 1);
-    return this.normalize(date) === this.normalize(yesterday);
+    const formattedDate = this.dateFormat(yesterday);
+    return (formattedDate.getDate() === this.dateFormat(this.today).getDate() &&
+            formattedDate.getMonth() === this.dateFormat(this.today).getMonth() &&
+            formattedDate.getFullYear() === this.dateFormat(this.today).getFullYear()
+          );
   }
 
   isOlder(date: Date): boolean {
