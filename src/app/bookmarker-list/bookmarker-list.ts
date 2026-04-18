@@ -9,6 +9,7 @@ import { selectBookmarkers } from '../states/selector/app.selector';
 import { Router, RouterOutlet} from '@angular/router';
 import  Fuse from 'fuse.js';
 import { SearchBookmarker } from '../services/search-bookmarker' 
+import { GetBookmarkerService } from '../services/get-bookmarker-service'
 export interface Section {
   name: string;
   updated: Date;
@@ -26,9 +27,16 @@ export class BookmarkerList implements OnInit {
   private bookmarkers$: Observable<Bookmarker[]> = this.store.select(selectBookmarkers);
   private bookmarkersList?: any;
   private searchService = inject(SearchBookmarker);
+  private getBookmarkerService = inject(GetBookmarkerService);
   private today = new Date();
   public filteredBookmarkersList?: any;
   
+  constructor() {
+    const allBookmarkers = this.getBookmarkerService.getBookmarker().subscribe((response) => {
+      console.log("response ", response);
+    });
+  }
+
   ngOnInit(): void {
     this.bookmarkers$.subscribe((bookmarker)=> {
       this.bookmarkersList = bookmarker;
