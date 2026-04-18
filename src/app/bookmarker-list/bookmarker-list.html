@@ -1,0 +1,58 @@
+<mat-list>
+  <div mat-subheader>Today: </div>
+  @for (bookmarker of bookmarkers$ | async; track bookmarker.bookmarkerId; let i = $index) {
+    @if (isToday(bookmarker.datetime)) {
+      <mat-list-item>
+        <div matListItemTitle>{{ bookmarker.name }}</div>
+        <div matListItemLine>{{ bookmarker.url }}</div>
+        <div matListItemMeta>
+          <a
+            mat-list-item
+            (click)="editBookmarker(bookmarker.bookmarkerId);"
+          >
+          <mat-icon>edit</mat-icon>
+          </a>
+        </div>
+      </mat-list-item>
+    }
+  }
+  <mat-divider></mat-divider>
+  <div mat-subheader>Yesterday: </div>
+  
+  @for (bookmarker of bookmarkers$ | async; track bookmarker.bookmarkerId; ; let i = $index) {
+    @if (isYesterday(bookmarker.datetime)) {
+      <mat-list-item>
+        <div matListItemTitle> {{ bookmarker.name }}</div>
+        <div matListItemLine>{{ bookmarker.url }}</div>
+        <div matListItemMeta>
+          <a
+            mat-list-item
+            (click)="editBookmarker(bookmarker.bookmarkerId);"
+          >
+          <mat-icon>edit</mat-icon>
+          </a>
+        </div>
+      </mat-list-item>
+    }
+  }
+<mat-divider></mat-divider>
+<div mat-subheader>Older: </div>
+  @for (bookmarker of bookmarkers$ | async; track bookmarker.bookmarkerId; ; let i = $index) {
+    @if (!isToday(bookmarker.datetime) && !isYesterday(bookmarker.datetime)) {
+      <mat-list-item>
+        <div matListItemTitle>{{ bookmarker.name }}</div>
+        <div matListItemLine>{{ bookmarker.url }}</div>
+        <div matListItemMeta>
+          <a
+            mat-list-item
+            (click)="editBookmarker(bookmarker.bookmarkerId);"
+          >
+          <mat-icon>edit</mat-icon>
+          </a>
+        </div>
+      </mat-list-item>
+    }
+  }
+</mat-list>
+
+<router-outlet></router-outlet>
