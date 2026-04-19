@@ -6,10 +6,11 @@
   <div style="flex: 0 0 auto"></div>
 
   <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Filter Bookmarker</mat-label>
     <input
+      type="text"
       matInput
       [(ngModel)]="searchBookmarker"
-      placeholder="Filter Bookmarker"
       autocomplete="off"
       (input)="onSearchBookmarker()"
     />

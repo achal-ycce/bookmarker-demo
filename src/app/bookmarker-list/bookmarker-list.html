@@ -2,7 +2,7 @@
 <mat-list class="loader">
   <mat-spinner></mat-spinner>
 </mat-list>
-} @if(!(loading$ | async)){ @if(searchText){
+} @if(!(loading$ | async)){ @if(searchService.searchTerm$ | async){
 <h4>Results for "{{searchService.searchTerm$ | async}}":</h4>
 }
 <mat-list>
