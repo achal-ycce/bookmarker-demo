@@ -1,7 +1,11 @@
+:host {
+  width: 60%;
+  background: whitesmoke;
+}
 .loader {
-  width: 80%;  
+  width: 80%;
   display: flex;
   justify-content: center;
-  align-items: center;     
-  height: 80vh;           
+  align-items: center;
+  height: 80vh;
 }

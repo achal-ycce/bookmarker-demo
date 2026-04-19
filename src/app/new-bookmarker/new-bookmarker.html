@@ -1,7 +1,16 @@
- <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
-      
-      <!-- Name Field -->
-      <mat-form-field appearance="outline" class="full-width">
+<mat-card class="example-card mat-typography" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>
+      @if(isEditMode) {
+      <span class="f-14">Edit Existing Bookmarker</span>
+      } @else {
+      <span class="f-14">Create New Bookmarker</span>
+      }
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+      <mat-form-field class="full-width bm-name">
         <mat-label>Name</mat-label>
         <input matInput formControlName="name" />
         <mat-error *ngIf="form.get('name')?.hasError('required')">
@@ -12,21 +21,38 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- URL Field -->
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field class="full-width bm-url">
         <mat-label>URL</mat-label>
         <input matInput formControlName="url" />
-        <mat-error *ngIf="form.get('url')?.hasError('required')">
-        </mat-error>
-        <mat-error *ngIf="form.get('url')?.hasError('pattern')">
-        </mat-error>
+        <mat-error *ngIf="form.get('url')?.hasError('required')"> </mat-error>
+        <mat-error *ngIf="form.get('url')?.hasError('pattern')"> </mat-error>
       </mat-form-field>
 
-      <input type="hidden" formControlName="datetime">
-      <input type="hidden" formControlName="bookmarkerId">
+      <input type="hidden" formControlName="datetime" />
+      <input type="hidden" formControlName="bookmarkerId" />
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="disableSubmit()"
+        >
+          @if(isEditMode) {
+          <span>Update Bookmarker</span>
+          } @else {
+          <span>Create Bookmarker</span>
+          }
+        </button>
 
-      <!-- Submit Button -->
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
-        Submit
-      </button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="onCancel()"
+          class="ml-15"
+        >
+          Cancel
+        </button>
+      </mat-card-actions>
     </form>
+  </mat-card-content>
+</mat-card>

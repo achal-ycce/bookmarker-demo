@@ -1,0 +1,25 @@
+:host {
+  width: 60%;
+  .bm-name {
+    width: 40%;
+  }
+  .bm-url {
+    width: 58%;
+  }
+}
+
+.bm-url {
+  margin-left: 1rem;
+}
+
+.f-14 {
+  font-size: 18px;
+}
+
+.ml-15 {
+  margin-left: 15px;
+}
+
+mat-card-header {
+  padding-bottom: 15px;
+}

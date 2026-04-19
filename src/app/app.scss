@@ -1,7 +1,15 @@
+:host,
+.main-container {
+  display: block;
+  min-height: 100vh;
+}
+
 .main-content {
-  width: 80%;  
+  width: auto;
   display: flex;
-  //justify-content: center; /* horizontal center */
-  align-items: center;     /* vertical center */
-  height: 100vh;           /* full screen height */
+  //justify-content: center;
+  align-items: center;
+  //height: 100vh;
+  height: auto;
+  padding: 30px;
 }
