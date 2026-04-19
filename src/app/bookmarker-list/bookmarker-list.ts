@@ -13,6 +13,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import Fuse from 'fuse.js';
 import { SearchBookmarker } from '../services/search-bookmarker';
 import { loadItems } from '../states/action/app.action';
+import { DateUtils } from '../services/dateUtils';
 
 @Component({
   selector: 'app-bookmarker-list',
@@ -34,9 +35,10 @@ export class BookmarkerList implements OnInit {
   private bookmarkers$?: Observable<Bookmarker[]>;
   private bookmarkersList?: any;
   public searchService = inject(SearchBookmarker);
-  private today = new Date();
   public filteredBookmarkersList?: any;
   public searchText?: string;
+  public dateUtils = inject(DateUtils);
+
   loading$?: Observable<boolean>;
   configureSearch() {
     let fuse = new Fuse(this.bookmarkersList, {
@@ -69,35 +71,5 @@ export class BookmarkerList implements OnInit {
 
   editBookmarker(id: Number) {
     this.route.navigate(['/new-bookmarker', id]);
-  }
-
-  private dateFormat(date: Date) {
-    return new Date(date);
-  }
-
-  isToday(date: Date): boolean {
-    const formattedDate = this.dateFormat(date);
-    return (
-      formattedDate.getDate() === this.dateFormat(this.today).getDate() &&
-      formattedDate.getMonth() === this.dateFormat(this.today).getMonth() &&
-      formattedDate.getFullYear() === this.dateFormat(this.today).getFullYear()
-    );
-  }
-
-  isYesterday(date: Date): boolean {
-    const yesterday = new Date(this.today);
-    yesterday.setDate(this.today.getDate() - 1);
-    const formattedDate = this.dateFormat(yesterday);
-    return (
-      formattedDate.getDate() === this.dateFormat(this.today).getDate() &&
-      formattedDate.getMonth() === this.dateFormat(this.today).getMonth() &&
-      formattedDate.getFullYear() === this.dateFormat(this.today).getFullYear()
-    );
-  }
-
-  isOlder(date: Date): boolean {
-    const yesterday = new Date(this.today);
-    yesterday.setDate(this.today.getDate() - 1);
-    return date < yesterday;
   }
 }

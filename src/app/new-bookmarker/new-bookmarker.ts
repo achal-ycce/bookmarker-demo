@@ -66,7 +66,6 @@ export class NewBookmarker implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      console.log('Form Data:', this.form.value);
       const newBookmarker: Bookmarker = this.form.value;
       if (this.isEditMode) {
         this.store.dispatch(edit({ bookmarker: newBookmarker }));
@@ -110,7 +109,6 @@ export class NewBookmarker implements OnInit {
       .subscribe((bookmarker) => {
         if (bookmarker) {
           this.form.patchValue(bookmarker);
-          console.log('selected bookmarker', bookmarker);
         }
       });
   }
