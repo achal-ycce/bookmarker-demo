@@ -1,7 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common'
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Bookmarker } from '../models/bookmarker';
@@ -18,7 +20,7 @@ export interface Section {
 
 @Component({
   selector: 'app-bookmarker-list',
-  imports: [MatListModule, MatIconModule, MatDividerModule, RouterOutlet],
+  imports: [CommonModule, MatListModule, MatIconModule, MatProgressSpinnerModule, MatDividerModule, RouterOutlet],
   templateUrl: './bookmarker-list.html',
   styleUrl: './bookmarker-list.scss',
 })
@@ -31,7 +33,7 @@ export class BookmarkerList implements OnInit {
   private getBookmarkerService = inject(GetBookmarkerService);
   private today = new Date();
   public filteredBookmarkersList?: any;
-  
+  loading$?: Observable<boolean>;
   configureSearch() {
     let fuse = new Fuse(this.bookmarkersList, { keys: ['name', 'url'], threshold: 0.3 });
     this.searchService.searchTerm$.subscribe(term => {
@@ -45,6 +47,7 @@ export class BookmarkerList implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading$ = this.store.select(state => state.bookmarkers.loading);
     this.bookmarkers$ = this.store.select(selectBookmarkers);
     this.bookmarkers$.subscribe((bookmarker)=> {
       this.bookmarkersList = bookmarker;
@@ -52,7 +55,7 @@ export class BookmarkerList implements OnInit {
         this.store.dispatch(loadItems());
       }
       this.configureSearch();
-    });
+    });    
   }
 
   editBookmarker(id: Number) {
