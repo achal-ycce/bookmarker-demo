@@ -1,3 +1,9 @@
+@if(loading$ | async){
+  <mat-list class="loader">
+    <mat-spinner></mat-spinner>
+  </mat-list>
+}
+@if(!(loading$ | async)){
 <mat-list>
   <div mat-subheader>Today: </div>
   @for (bookmarker of filteredBookmarkersList; track bookmarker.bookmarkerId; let i = $index) {
@@ -54,5 +60,6 @@
     }
   }
 </mat-list>
+}
 
 <router-outlet></router-outlet>

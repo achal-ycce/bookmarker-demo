@@ -1,14 +1,20 @@
 import { createReducer, on } from '@ngrx/store';
-import { add, remove, clear, edit, loadItemsSuccess } from '../action/app.action';
+import { add, remove, clear, edit, loadItems, loadItemsSuccess } from '../action/app.action';
 import { AppState } from '../app.state';
 
 export const initialState: AppState = {
-  bookmarkers: []
+  bookmarkers: [],
+  loading: false
 }
 
 export const BookmarkerReducer = createReducer(
   initialState,
-  on(loadItemsSuccess, (state, { bookmarkers }) => ({ ...state, bookmarkers })),
+  on(loadItems, state => ({ ...state, loading: true })),
+  on(loadItemsSuccess, (state, { bookmarkers }) => ({ 
+    ...state, 
+    bookmarkers,
+    loading: false
+  })),
   on(add, (state, {bookmarker}) => (
     {
       ...state,

@@ -1,4 +1,5 @@
 import { Bookmarker } from "../models/bookmarker";
 export interface AppState {
-    bookmarkers: Bookmarker[];
+    bookmarkers: Bookmarker[],
+    loading: Boolean;
 }
