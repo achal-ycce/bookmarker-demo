@@ -2,7 +2,9 @@
 <mat-list class="loader">
   <mat-spinner></mat-spinner>
 </mat-list>
-} @if(!(loading$ | async)){
+} @if(!(loading$ | async)){ @if(searchText){
+<h4>Results for "{{searchService.searchTerm$ | async}}":</h4>
+}
 <mat-list>
   <div mat-subheader>Today:</div>
   @for (bookmarker of filteredBookmarkersList; track bookmarker.bookmarkerId;

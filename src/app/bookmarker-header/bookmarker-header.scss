@@ -1,3 +1,11 @@
 .mat-toolbar {
-    background: lightblue;
+  background: #1877f2;
+  color: whitesmoke;
+}
+
+.search-field {
+  input,
+  mat-icon {
+    color: whitesmoke;
+  }
 }

@@ -60,6 +60,10 @@ export class NewBookmarker implements OnInit {
     });
   }
 
+  onCancel() {
+    this.route.navigate(['/bookmarker-list']);
+  }
+
   onSubmit() {
     if (this.form.valid) {
       console.log('Form Data:', this.form.value);
@@ -73,6 +77,12 @@ export class NewBookmarker implements OnInit {
       }
       this.route.navigate(['/bookmarker-list']);
     }
+  }
+
+  disableSubmit() {
+    return this.isEditMode
+      ? (!this.form.dirty && this.form.pristine) || this.form.invalid
+      : this.form.invalid;
   }
 
   ngOnInit() {

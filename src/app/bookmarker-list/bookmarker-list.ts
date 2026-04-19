@@ -12,12 +12,7 @@ import { selectBookmarkers } from '../states/selector/app.selector';
 import { Router, RouterOutlet } from '@angular/router';
 import Fuse from 'fuse.js';
 import { SearchBookmarker } from '../services/search-bookmarker';
-import { GetBookmarkerService } from '../services/get-bookmarker-service';
 import { loadItems } from '../states/action/app.action';
-export interface Section {
-  name: string;
-  updated: Date;
-}
 
 @Component({
   selector: 'app-bookmarker-list',
@@ -38,10 +33,10 @@ export class BookmarkerList implements OnInit {
   private route = inject(Router);
   private bookmarkers$?: Observable<Bookmarker[]>;
   private bookmarkersList?: any;
-  private searchService = inject(SearchBookmarker);
-  private getBookmarkerService = inject(GetBookmarkerService);
+  public searchService = inject(SearchBookmarker);
   private today = new Date();
   public filteredBookmarkersList?: any;
+  public searchText?: string;
   loading$?: Observable<boolean>;
   configureSearch() {
     let fuse = new Fuse(this.bookmarkersList, {
@@ -50,6 +45,7 @@ export class BookmarkerList implements OnInit {
     });
     this.searchService.searchTerm$.subscribe((term) => {
       if (term) {
+        this.searchText = term;
         this.filteredBookmarkersList = fuse
           .search(term)
           .map((result) => result.item);
