@@ -10,8 +10,8 @@ import { Store } from '@ngrx/store';
 import { Observable, switchMap } from 'rxjs';
 import { Bookmarker } from '../models/bookmarker';
 import { selectBookmarkerById, selectBookmarkers } from '../states/selector/app.selector';
-//import { BookmarkerReducer } from '../states/reducer/app.reducer';
 import { add, edit } from '../states/action/app.action';
+import { ToasterMessage } from '../services/toaster-message';
 @Component({
   selector: 'app-new-bookmarker',
   imports: [ ReactiveFormsModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatError],
@@ -24,10 +24,10 @@ export class NewBookmarker implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private store = inject(Store);
   private isEditMode:Boolean = false;
+  private toasterMessage = inject(ToasterMessage);
   form: FormGroup;
   
   selectedBookmarkerId?: Number;
-  //bookmarker$?: Observable<Bookmarker | undefined>;
   bookmarkers$?: Observable<Bookmarker[]>;
   bookmarker?: Bookmarker;
 
@@ -50,8 +50,10 @@ export class NewBookmarker implements OnInit {
       const newBookmarker: Bookmarker = this.form.value;
       if (this.isEditMode) {
         this.store.dispatch(edit({bookmarker : newBookmarker}));
+        this.toasterMessage.openSnackBar('Bookmarker updated successfully.');
       } else {
         this.store.dispatch(add({bookmarker : newBookmarker}));
+        this.toasterMessage?.openSnackBar('Bookmarker added successfully.');
       } 
       this.route.navigate(['/bookmarker-list']);
     }
