@@ -8,10 +8,15 @@
 <mat-list>
   <div mat-subheader>Today:</div>
   @for (bookmarker of filteredBookmarkersList; track bookmarker.bookmarkerId;
-  let i = $index) { @if (isToday(bookmarker.datetime)) {
+  let i = $index) { @if (dateUtils.isToday(bookmarker.datetime)) {
+
   <mat-list-item>
+    <mat-icon matListItemIcon>bookmarker</mat-icon>
     <div matListItemTitle>{{ bookmarker.name }}</div>
-    <div matListItemLine>{{ bookmarker.url }}</div>
+    <div matListItemLine>
+      <a [href]="bookmarker.url" target="_blank"> {{ bookmarker.url }} </a>
+    </div>
+
     <div matListItemMeta>
       <a mat-list-item (click)="editBookmarker(bookmarker.bookmarkerId);">
         <mat-icon>edit</mat-icon>
@@ -23,10 +28,13 @@
   <div mat-subheader>Yesterday:</div>
 
   @for (bookmarker of filteredBookmarkersList; track bookmarker.bookmarkerId; ;
-  let i = $index) { @if (isYesterday(bookmarker.datetime)) {
+  let i = $index) { @if (dateUtils.isYesterday(bookmarker.datetime)) {
   <mat-list-item>
+    <mat-icon matListItemIcon>bookmarker</mat-icon>
     <div matListItemTitle>{{ bookmarker.name }}</div>
-    <div matListItemLine>{{ bookmarker.url }}</div>
+    <div matListItemLine>
+      <a [href]="bookmarker.url" target="_blank"> {{ bookmarker.url }} </a>
+    </div>
     <div matListItemMeta>
       <a mat-list-item (click)="editBookmarker(bookmarker.bookmarkerId);">
         <mat-icon>edit</mat-icon>
@@ -37,11 +45,14 @@
   <mat-divider></mat-divider>
   <div mat-subheader>Older:</div>
   @for (bookmarker of filteredBookmarkersList; track bookmarker.bookmarkerId; ;
-  let i = $index) { @if (!isToday(bookmarker.datetime) &&
-  !isYesterday(bookmarker.datetime)) {
+  let i = $index) { @if (!dateUtils.isToday(bookmarker.datetime) &&
+  !dateUtils.isYesterday(bookmarker.datetime)) {
   <mat-list-item>
+    <mat-icon matListItemIcon>bookmarker</mat-icon>
     <div matListItemTitle>{{ bookmarker.name }}</div>
-    <div matListItemLine>{{ bookmarker.url }}</div>
+    <div matListItemLine>
+      <a [href]="bookmarker.url" target="_blank"> {{ bookmarker.url }} </a>
+    </div>
     <div matListItemMeta>
       <a mat-list-item (click)="editBookmarker(bookmarker.bookmarkerId);">
         <mat-icon>edit</mat-icon>

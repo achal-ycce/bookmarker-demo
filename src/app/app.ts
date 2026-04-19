@@ -1,15 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {MatCardModule} from '@angular/material/card';
-import { StoreModule } from '@ngrx/store';
-
+import { MatCardModule } from '@angular/material/card';
 import { BookmarkerHeader } from './bookmarker-header/bookmarker-header';
-import { BookmarkerList } from './bookmarker-list/bookmarker-list';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, BookmarkerHeader, BookmarkerList, MatCardModule],
+  imports: [RouterOutlet, BookmarkerHeader, MatCardModule],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App {
   protected readonly title = signal('bookmarker-demo');
