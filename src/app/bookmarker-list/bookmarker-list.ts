@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Bookmarker } from '../models/bookmarker';
@@ -25,6 +27,8 @@ import { DateUtils } from '../services/dateUtils';
     MatProgressSpinnerModule,
     MatDividerModule,
     RouterOutlet,
+    TranslatePipe,
+    MatTooltipModule,
   ],
   templateUrl: './bookmarker-list.html',
   styleUrl: './bookmarker-list.scss',
@@ -38,6 +42,9 @@ export class BookmarkerList implements OnInit {
   public filteredBookmarkersList?: any;
   public searchText?: string;
   public dateUtils = inject(DateUtils);
+  public isTodayLabel: boolean = false;
+  public isYesterdayLabel: boolean = false;
+  public isOlderLabel: boolean = false;
 
   loading$?: Observable<boolean>;
   configureSearch() {
@@ -53,6 +60,26 @@ export class BookmarkerList implements OnInit {
           .map((result) => result.item);
       } else {
         this.filteredBookmarkersList = [...this.bookmarkersList];
+      }
+      this.hideShowLabel(this.filteredBookmarkersList);
+    });
+  }
+
+  hideShowLabel(filteredBookmarkersList: Bookmarker[]) {
+    this.isTodayLabel = false;
+
+    filteredBookmarkersList.forEach((bookmarker) => {
+      if (this.dateUtils.isToday(bookmarker.datetime) && !this.isTodayLabel) {
+        this.isTodayLabel = true;
+      }
+      if (
+        this.dateUtils.isYesterday(bookmarker.datetime) &&
+        !this.isYesterdayLabel
+      ) {
+        this.isYesterdayLabel = true;
+      }
+      if (this.dateUtils.isOlder(bookmarker.datetime) && !this.isOlderLabel) {
+        this.isOlderLabel = true;
       }
     });
   }

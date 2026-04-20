@@ -2,15 +2,27 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { SearchBookmarker } from '../services/search-bookmarker' 
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { TranslatePipe } from '@ngx-translate/core';
+import { SearchBookmarker } from '../services/search-bookmarker';
 
 @Component({
   selector: 'app-bookmarker-header',
-  imports: [MatToolbarModule, MatIconModule,  MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule],
+  imports: [
+    MatToolbarModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    FormsModule,
+    TranslatePipe,
+    MatTooltipModule,
+  ],
   templateUrl: './bookmarker-header.html',
   styleUrl: './bookmarker-header.scss',
 })
@@ -26,5 +38,4 @@ export class BookmarkerHeader {
   onSearchBookmarker() {
     this.searchService.setSearchTerm(this.searchBookmarker);
   }
-
 }
