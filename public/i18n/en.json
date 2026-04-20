@@ -1,0 +1,31 @@
+{
+  "BOOKMARKER_HEADER": {
+    "TITLE": "Bookmarkers",
+    "FILTER": "Filter bookmarkers",
+    "ADD_BOOKMARKER": "Add bookmarker"
+  },
+  "BOOKMARKER_LIST": {
+    "RESULTS_FOR": "Results for: ",
+    "TODAY": "Today",
+    "YESTERDAY": "Yesterday",
+    "OLDER": "Older",
+    "EDIT": "Edit Bookmarker"
+  },
+
+  "NEW_BOOKMARKER": {
+    "ADD_TITLE": "Add New Bookmarker",
+    "EDIT_TITLE": "Edit Existing Bookmarker",
+    "NAME_LABEL": "Name",
+    "URL_LABEL": "URL",
+    "TAGS_LABEL": "Tags (comma separated)",
+    "ADD_BUTTON": "Add Bookmarker",
+    "UPDATE_BUTTON": "Update Bookmarker",
+    "CREATE_BUTTON": "Create Bookmarker",
+    "ERRORS": {
+      "NAME_REQUIRED": "Name is required",
+      "NAME_MINLENGTH": "Name must be at least 3 characters",
+      "URL_REQUIRED": "URL is required",
+      "URL_PATTERN": "Please enter a valid URL"
+    }
+  }
+}

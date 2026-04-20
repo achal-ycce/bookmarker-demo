@@ -2,11 +2,11 @@
   color="primary"
   style="display: flex; justify-content: space-between; align-items: center"
 >
-  <span>Bookmarker</span>
+  <span>{{ 'BOOKMARKER_HEADER.TITLE' | translate }}</span>
   <div style="flex: 0 0 auto"></div>
 
   <mat-form-field appearance="outline" class="search-field">
-    <mat-label>Filter Bookmarker</mat-label>
+    <mat-label>{{ 'BOOKMARKER_HEADER.FILTER' | translate }}</mat-label>
     <input
       type="text"
       matInput
@@ -16,19 +16,22 @@
     />
     <mat-icon matSuffix>search</mat-icon>
     @if (searchBookmarker) {
-    <button
-      matSuffix
-      matIconButton
-      aria-label="Clear"
-      (click)="searchBookmarker=''; onSearchBookmarker();"
-    >
-      <mat-icon>close</mat-icon>
-    </button>
+      <button
+        matSuffix
+        matIconButton
+        aria-label="Clear"
+        (click)="searchBookmarker = ''; onSearchBookmarker()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
     }
   </mat-form-field>
   <div matListItemMeta>
-    <a mat-list-item (click)="addBookmarker();">
-      <mat-icon>add</mat-icon>
+    <a mat-list-item (click)="addBookmarker()">
+      <mat-icon
+        matTooltip="{{ 'BOOKMARKER_HEADER.ADD_BOOKMARKER' | translate }}"
+        >add</mat-icon
+      >
     </a>
   </div>
 </mat-toolbar>

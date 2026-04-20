@@ -1,31 +1,43 @@
 <mat-card class="example-card mat-typography" appearance="outlined">
   <mat-card-header>
     <mat-card-title>
-      @if(isEditMode) {
-      <span class="f-14">Edit Existing Bookmarker</span>
+      @if (isEditMode) {
+        <span class="f-14">{{ 'NEW_BOOKMARKER.EDIT_TITLE' | translate }}</span>
       } @else {
-      <span class="f-14">Create New Bookmarker</span>
+        <span class="f-14">{{ 'NEW_BOOKMARKER.ADD_TITLE' | translate }}</span>
       }
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
       <mat-form-field class="full-width bm-name">
-        <mat-label>Name</mat-label>
+        <mat-label>{{ 'NEW_BOOKMARKER.NAME_LABEL' | translate }}</mat-label>
         <input matInput formControlName="name" />
-        <mat-error *ngIf="form.get('name')?.hasError('required')">
-          Name is required
-        </mat-error>
-        <mat-error *ngIf="form.get('name')?.hasError('minlength')">
-          Name must be at least 3 characters
-        </mat-error>
+        @if (form.get('name')?.hasError('required')) {
+          <mat-error>
+            {{ 'NEW_BOOKMARKER.ERRORS.NAME_REQUIRED' | translate }}
+          </mat-error>
+        }
+        @if (form.get('name')?.hasError('minlength')) {
+          <mat-error>
+            {{ 'NEW_BOOKMARKER.ERRORS.NAME_MINLENGTH' | translate }}
+          </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="full-width bm-url">
-        <mat-label>URL</mat-label>
+        <mat-label>{{ 'NEW_BOOKMARKER.URL_LABEL' | translate }}</mat-label>
         <input matInput formControlName="url" />
-        <mat-error *ngIf="form.get('url')?.hasError('required')"> </mat-error>
-        <mat-error *ngIf="form.get('url')?.hasError('pattern')"> </mat-error>
+        @if (form.get('url')?.hasError('required')) {
+          <mat-error>
+            {{ 'NEW_BOOKMARKER.ERRORS.URL_REQUIRED' | translate }}
+          </mat-error>
+        }
+        @if (form.get('url')?.hasError('pattern')) {
+          <mat-error>
+            {{ 'NEW_BOOKMARKER.ERRORS.URL_PATTERN' | translate }}
+          </mat-error>
+        }
       </mat-form-field>
 
       <input type="hidden" formControlName="datetime" />
@@ -37,10 +49,10 @@
           type="submit"
           [disabled]="disableSubmit()"
         >
-          @if(isEditMode) {
-          <span>Update Bookmarker</span>
+          @if (isEditMode) {
+            <span>{{ 'NEW_BOOKMARKER.UPDATE_BUTTON' | translate }}</span>
           } @else {
-          <span>Create Bookmarker</span>
+            <span>{{ 'NEW_BOOKMARKER.CREATE_BUTTON' | translate }}</span>
           }
         </button>
 

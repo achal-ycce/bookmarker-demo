@@ -1,66 +1,104 @@
-@if(loading$ | async){
-<mat-list class="loader">
-  <mat-spinner></mat-spinner>
-</mat-list>
-} @if(!(loading$ | async)){ @if(searchService.searchTerm$ | async){
-<h4>Results for "{{searchService.searchTerm$ | async}}":</h4>
-}
-<mat-list>
-  <div mat-subheader>Today:</div>
-  @for (bookmarker of filteredBookmarkersList; track bookmarker.bookmarkerId;
-  let i = $index) { @if (dateUtils.isToday(bookmarker.datetime)) {
+@if (loading$ | async) {
+  <mat-list class="loader">
+    <mat-spinner></mat-spinner>
+  </mat-list>
+} @else {
+  @if (searchService.searchTerm$ | async) {
+    <h4>
+      {{ 'BOOKMARKER_LIST.RESULTS_FOR' | translate }} "{{
+        searchService.searchTerm$ | async
+      }}"
+    </h4>
+  }
+  <mat-list>
+    @if (isTodayLabel) {
+      <div mat-subheader>{{ 'BOOKMARKER_LIST.TODAY' | translate }}</div>
+    }
+    @for (
+      bookmarker of filteredBookmarkersList;
+      track bookmarker.bookmarkerId;
+      let i = $index
+    ) {
+      @if (dateUtils.isToday(bookmarker.datetime)) {
+        <mat-list-item>
+          <mat-icon matListItemIcon>bookmarker</mat-icon>
+          <div matListItemTitle>{{ bookmarker.name }}</div>
+          <div matListItemLine>
+            <a [href]="bookmarker.url" target="_blank">
+              {{ bookmarker.url }}
+            </a>
+          </div>
 
-  <mat-list-item>
-    <mat-icon matListItemIcon>bookmarker</mat-icon>
-    <div matListItemTitle>{{ bookmarker.name }}</div>
-    <div matListItemLine>
-      <a [href]="bookmarker.url" target="_blank"> {{ bookmarker.url }} </a>
-    </div>
-
-    <div matListItemMeta>
-      <a mat-list-item (click)="editBookmarker(bookmarker.bookmarkerId);">
-        <mat-icon>edit</mat-icon>
-      </a>
-    </div>
-  </mat-list-item>
-  } }
-  <mat-divider></mat-divider>
-  <div mat-subheader>Yesterday:</div>
-
-  @for (bookmarker of filteredBookmarkersList; track bookmarker.bookmarkerId; ;
-  let i = $index) { @if (dateUtils.isYesterday(bookmarker.datetime)) {
-  <mat-list-item>
-    <mat-icon matListItemIcon>bookmarker</mat-icon>
-    <div matListItemTitle>{{ bookmarker.name }}</div>
-    <div matListItemLine>
-      <a [href]="bookmarker.url" target="_blank"> {{ bookmarker.url }} </a>
-    </div>
-    <div matListItemMeta>
-      <a mat-list-item (click)="editBookmarker(bookmarker.bookmarkerId);">
-        <mat-icon>edit</mat-icon>
-      </a>
-    </div>
-  </mat-list-item>
-  } }
-  <mat-divider></mat-divider>
-  <div mat-subheader>Older:</div>
-  @for (bookmarker of filteredBookmarkersList; track bookmarker.bookmarkerId; ;
-  let i = $index) { @if (!dateUtils.isToday(bookmarker.datetime) &&
-  !dateUtils.isYesterday(bookmarker.datetime)) {
-  <mat-list-item>
-    <mat-icon matListItemIcon>bookmarker</mat-icon>
-    <div matListItemTitle>{{ bookmarker.name }}</div>
-    <div matListItemLine>
-      <a [href]="bookmarker.url" target="_blank"> {{ bookmarker.url }} </a>
-    </div>
-    <div matListItemMeta>
-      <a mat-list-item (click)="editBookmarker(bookmarker.bookmarkerId);">
-        <mat-icon>edit</mat-icon>
-      </a>
-    </div>
-  </mat-list-item>
-  } }
-</mat-list>
+          <div matListItemMeta>
+            <a mat-list-item (click)="editBookmarker(bookmarker.bookmarkerId)">
+              <mat-icon matTooltip="{{ 'BOOKMARKER_LIST.EDIT' | translate }}"
+                >edit</mat-icon
+              >
+            </a>
+          </div>
+        </mat-list-item>
+      }
+    }
+    <mat-divider></mat-divider>
+    @if (isYesterdayLabel) {
+      <div mat-subheader>{{ 'BOOKMARKER_LIST.YESTERDAY' | translate }}</div>
+    }
+    @for (
+      bookmarker of filteredBookmarkersList;
+      track bookmarker.bookmarkerId;
+      let i = $index
+    ) {
+      @if (dateUtils.isYesterday(bookmarker.datetime)) {
+        <mat-list-item>
+          <mat-icon matListItemIcon>bookmarker</mat-icon>
+          <div matListItemTitle>{{ bookmarker.name }}</div>
+          <div matListItemLine>
+            <a [href]="bookmarker.url" target="_blank">
+              {{ bookmarker.url }}
+            </a>
+          </div>
+          <div matListItemMeta>
+            <a mat-list-item (click)="editBookmarker(bookmarker.bookmarkerId)">
+              <mat-icon matTooltip="{{ 'BOOKMARKER_LIST.EDIT' | translate }}"
+                >edit</mat-icon
+              >
+            </a>
+          </div>
+        </mat-list-item>
+      }
+    }
+    <mat-divider></mat-divider>
+    @if (isOlderLabel) {
+      <div mat-subheader>{{ 'BOOKMARKER_LIST.OLDER' | translate }}</div>
+    }
+    @for (
+      bookmarker of filteredBookmarkersList;
+      track bookmarker.bookmarkerId;
+      let i = $index
+    ) {
+      @if (
+        !dateUtils.isToday(bookmarker.datetime) &&
+        !dateUtils.isYesterday(bookmarker.datetime)
+      ) {
+        <mat-list-item>
+          <mat-icon matListItemIcon>bookmarker</mat-icon>
+          <div matListItemTitle>{{ bookmarker.name }}</div>
+          <div matListItemLine>
+            <a [href]="bookmarker.url" target="_blank">
+              {{ bookmarker.url }}
+            </a>
+          </div>
+          <div matListItemMeta>
+            <a mat-list-item (click)="editBookmarker(bookmarker.bookmarkerId)">
+              <mat-icon matTooltip="{{ 'BOOKMARKER_LIST.EDIT' | translate }}"
+                >edit</mat-icon
+              >
+            </a>
+          </div>
+        </mat-list-item>
+      }
+    }
+  </mat-list>
 }
 
 <router-outlet></router-outlet>
