@@ -14,6 +14,7 @@ import { MatError } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { Observable, switchMap } from 'rxjs';
@@ -36,6 +37,7 @@ import { ToasterMessage } from '../services/toaster-message';
     MatCardModule,
     MatChipsModule,
     MatProgressBarModule,
+    MatGridListModule,
     TranslatePipe,
   ],
   templateUrl: './new-bookmarker.html',

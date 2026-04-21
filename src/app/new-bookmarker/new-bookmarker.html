@@ -10,38 +10,43 @@
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
-      <mat-form-field class="full-width bm-name">
-        <mat-label>{{ 'NEW_BOOKMARKER.NAME_LABEL' | translate }}</mat-label>
-        <input matInput formControlName="name" />
-        @if (form.get('name')?.hasError('required')) {
-          <mat-error>
-            {{ 'NEW_BOOKMARKER.ERRORS.NAME_REQUIRED' | translate }}
-          </mat-error>
-        }
-        @if (form.get('name')?.hasError('minlength')) {
-          <mat-error>
-            {{ 'NEW_BOOKMARKER.ERRORS.NAME_MINLENGTH' | translate }}
-          </mat-error>
-        }
-      </mat-form-field>
+      <mat-grid-list cols="2" rowHeight="80px">
+        <mat-grid-tile>
+          <mat-form-field class="full-width bm-name" style="width: 100%">
+            <mat-label>{{ 'NEW_BOOKMARKER.NAME_LABEL' | translate }}</mat-label>
+            <input matInput formControlName="name" />
+            @if (form.get('name')?.hasError('required')) {
+              <mat-error>
+                {{ 'NEW_BOOKMARKER.ERRORS.NAME_REQUIRED' | translate }}
+              </mat-error>
+            }
+            @if (form.get('name')?.hasError('minlength')) {
+              <mat-error>
+                {{ 'NEW_BOOKMARKER.ERRORS.NAME_MINLENGTH' | translate }}
+              </mat-error>
+            }
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-form-field class="full-width bm-url">
-        <mat-label>{{ 'NEW_BOOKMARKER.URL_LABEL' | translate }}</mat-label>
-        <input matInput formControlName="url" />
-        @if (form.get('url')?.hasError('required')) {
-          <mat-error>
-            {{ 'NEW_BOOKMARKER.ERRORS.URL_REQUIRED' | translate }}
-          </mat-error>
-        }
-        @if (form.get('url')?.hasError('pattern')) {
-          <mat-error>
-            {{ 'NEW_BOOKMARKER.ERRORS.URL_PATTERN' | translate }}
-          </mat-error>
-        }
-      </mat-form-field>
-
-      <input type="hidden" formControlName="datetime" />
-      <input type="hidden" formControlName="bookmarkerId" />
+        <mat-grid-tile>
+          <mat-form-field class="full-width bm-url" style="width: 100%">
+            <mat-label>{{ 'NEW_BOOKMARKER.URL_LABEL' | translate }}</mat-label>
+            <input matInput formControlName="url" />
+            @if (form.get('url')?.hasError('required')) {
+              <mat-error>
+                {{ 'NEW_BOOKMARKER.ERRORS.URL_REQUIRED' | translate }}
+              </mat-error>
+            }
+            @if (form.get('url')?.hasError('pattern')) {
+              <mat-error>
+                {{ 'NEW_BOOKMARKER.ERRORS.URL_PATTERN' | translate }}
+              </mat-error>
+            }
+          </mat-form-field>
+        </mat-grid-tile>
+        <input type="hidden" formControlName="datetime" />
+        <input type="hidden" formControlName="bookmarkerId" />
+      </mat-grid-list>
       <mat-card-actions>
         <button
           mat-raised-button

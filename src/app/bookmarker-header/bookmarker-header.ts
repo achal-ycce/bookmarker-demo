@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { TranslatePipe } from '@ngx-translate/core';
 import { SearchBookmarker } from '../services/search-bookmarker';
@@ -22,6 +23,7 @@ import { SearchBookmarker } from '../services/search-bookmarker';
     FormsModule,
     TranslatePipe,
     MatTooltipModule,
+    MatGridListModule,
   ],
   templateUrl: './bookmarker-header.html',
   styleUrl: './bookmarker-header.scss',

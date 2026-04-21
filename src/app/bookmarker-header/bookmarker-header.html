@@ -1,31 +1,39 @@
-<mat-toolbar
-  color="primary"
-  style="display: flex; justify-content: space-between; align-items: center"
->
-  <span>{{ 'BOOKMARKER_HEADER.TITLE' | translate }}</span>
-  <div style="flex: 0 0 auto"></div>
+<mat-toolbar color="primary" class="header-toolbar">
+  <!-- Title on the Left -->
+  <span class="toolbar-title">{{ 'BOOKMARKER_HEADER.TITLE' | translate }}</span>
 
-  <mat-form-field appearance="outline" class="search-field">
-    <mat-label>{{ 'BOOKMARKER_HEADER.FILTER' | translate }}</mat-label>
-    <input
-      type="text"
-      matInput
-      [(ngModel)]="searchBookmarker"
-      autocomplete="off"
-      (input)="onSearchBookmarker()"
-    />
-    <mat-icon matSuffix>search</mat-icon>
-    @if (searchBookmarker) {
-      <button
-        matSuffix
-        matIconButton
-        aria-label="Clear"
-        (click)="searchBookmarker = ''; onSearchBookmarker()"
-      >
-        <mat-icon>close</mat-icon>
-      </button>
-    }
-  </mat-form-field>
+  <span class="spacer"></span>
+
+  <div class="search-container">
+    <mat-form-field
+      appearance="outline"
+      subscriptSizing="dynamic"
+      class="search-field"
+    >
+      <mat-icon matSuffix>search</mat-icon>
+      <mat-label>{{ 'BOOKMARKER_HEADER.FILTER' | translate }}</mat-label>
+      <input
+        type="text"
+        matInput
+        [(ngModel)]="searchBookmarker"
+        autocomplete="off"
+        (input)="onSearchBookmarker()"
+      />
+      @if (searchBookmarker) {
+        <button
+          matSuffix
+          matIconButton
+          aria-label="Clear"
+          (click)="searchBookmarker = ''; onSearchBookmarker()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+  </div>
+
+  <span class="spacer"></span>
+
   <div matListItemMeta>
     <a mat-list-item (click)="addBookmarker()">
       <mat-icon
