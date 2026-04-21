@@ -79,7 +79,11 @@ export class BookmarkerList implements OnInit {
       ) {
         this.isYesterdayLabel = true;
       }
-      if (this.dateUtils.isOlder(bookmarker.datetime) && !this.isOlderLabel) {
+      if (
+        !this.dateUtils.isToday(bookmarker.datetime) &&
+        !this.dateUtils.isYesterday(bookmarker.datetime) &&
+        !this.isOlderLabel
+      ) {
         this.isOlderLabel = true;
       }
     });
