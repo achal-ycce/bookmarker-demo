@@ -47,10 +47,10 @@
         <input type="hidden" formControlName="datetime" />
         <input type="hidden" formControlName="bookmarkerId" />
       </mat-grid-list>
-      <mat-card-actions>
+      <mat-card-actions align="end">
         <button
-          mat-raised-button
-          color="primary"
+          matButton="filled"
+          class="square-button"
           type="submit"
           [disabled]="disableSubmit()"
         >
@@ -62,10 +62,10 @@
         </button>
 
         <button
-          mat-raised-button
+          matButton
+          class="square-button"
           color="primary"
           (click)="onCancel()"
-          class="ml-15"
         >
           Cancel
         </button>
