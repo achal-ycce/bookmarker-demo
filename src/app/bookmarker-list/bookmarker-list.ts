@@ -6,6 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';

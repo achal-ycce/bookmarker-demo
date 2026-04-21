@@ -1,12 +1,22 @@
 .mat-toolbar {
-  background: #1877f2;
-  color: whitesmoke;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
 }
 
 .search-field {
   input,
   mat-label,
   mat-icon {
-    color: whitesmoke;
+    color: var(--mat-sys-on-primary);
   }
+}
+
+.spacer {
+  flex: 1 1 auto; /* Pushes elements apart */
+}
+
+.header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
